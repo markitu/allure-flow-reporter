@@ -4,13 +4,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CheckCircle, XCircle, Clock, AlertCircle, TrendingUp, Calendar } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { CheckCircle, XCircle, Clock, AlertCircle, TrendingUp, Calendar, User } from "lucide-react";
 import TestOverviewCharts from "@/components/TestOverviewCharts";
 import TestDetailsList from "@/components/TestDetailsList";
 import { mockTestResults } from "@/lib/mockData";
 
 const TestResults = () => {
   const [selectedExecution, setSelectedExecution] = useState(mockTestResults[0]);
+  const [authorFilter, setAuthorFilter] = useState("all");
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -30,19 +32,50 @@ const TestResults = () => {
     }
   };
 
+  // Filter executions by author
+  const filteredExecutions = mockTestResults.filter(execution => 
+    authorFilter === "all" || execution.author === authorFilter
+  );
+
+  // Get unique authors for filter dropdown
+  const authors = Array.from(new Set(mockTestResults.map(execution => execution.author)));
+
   return (
     <div className="space-y-6">
+      {/* Author Filter */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Filter by Author</CardTitle>
+          <CardDescription>View test executions by specific team members</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Select value={authorFilter} onValueChange={setAuthorFilter}>
+            <SelectTrigger className="w-64">
+              <SelectValue placeholder="Filter by author" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Authors</SelectItem>
+              {authors.map(author => (
+                <SelectItem key={author} value={author}>
+                  {author}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </CardContent>
+      </Card>
+
       {/* Execution History Sidebar */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <Card className="lg:col-span-1">
           <CardHeader>
             <CardTitle className="text-lg">Recent Executions</CardTitle>
-            <CardDescription>Test run history</CardDescription>
+            <CardDescription>Test run history ({filteredExecutions.length} results)</CardDescription>
           </CardHeader>
           <CardContent>
             <ScrollArea className="h-[400px]">
               <div className="space-y-3">
-                {mockTestResults.map((execution) => (
+                {filteredExecutions.map((execution) => (
                   <div
                     key={execution.id}
                     className={`p-3 rounded-lg border cursor-pointer transition-colors ${
@@ -57,6 +90,10 @@ const TestResults = () => {
                       <Badge className={getStatusColor(execution.status)} variant="outline">
                         {execution.status}
                       </Badge>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-gray-600 mb-1">
+                      <User className="w-3 h-3" />
+                      {execution.author}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-gray-600">
                       <Calendar className="w-3 h-3" />
@@ -81,7 +118,7 @@ const TestResults = () => {
                 <div>
                   <CardTitle className="text-xl">{selectedExecution.suiteName}</CardTitle>
                   <CardDescription>
-                    Executed on {new Date(selectedExecution.timestamp).toLocaleString()}
+                    Executed on {new Date(selectedExecution.timestamp).toLocaleString()} by {selectedExecution.author}
                   </CardDescription>
                 </div>
                 <div className="flex items-center gap-2">
