@@ -1,0 +1,83 @@
+
+{
+  "title": "Панель управления автотестами",
+  "subtitle": "Комплексная платформа для выполнения и отчетности тестов",
+  "testExecution": "Выполнение тестов",
+  "results": "Результаты",
+  "runTests": "Запустить тесты",
+  "running": "Выполняется...",
+  "testExecutionStarted": "Выполнение тестов начато",
+  "testExecutionComplete": "Выполнение тестов завершено",
+  "finishedSuccessfully": "завершено успешно!",
+  "filterByAuthor": "Фильтр по автору",
+  "viewTestExecutions": "Просмотр выполнения тестов по участникам команды",
+  "allAuthors": "Все авторы",
+  "recentExecutions": "Последние выполнения",
+  "testRunHistory": "История запусков тестов",
+  "results_count": "{{count}} результатов",
+  "executedOn": "Выполнено {{date}} пользователем {{author}}",
+  "passed": "Пройдено",
+  "failed": "Провалено",
+  "skipped": "Пропущено",
+  "duration": "Длительность",
+  "overview": "Обзор",
+  "chartsAnalytics": "Графики и аналитика",
+  "testDetails": "Детали тестов",
+  "filterTests": "Фильтр тестов",
+  "searchFilterTests": "Поиск и фильтрация результатов тестов",
+  "searchTests": "Поиск тестов...",
+  "filterByStatus": "Фильтр по статусу",
+  "allStatuses": "Все статусы",
+  "filterByCategory": "Фильтр по категории",
+  "allCategories": "Все категории",
+  "testResults_count": "Результаты тестов ({{count}})",
+  "detailedTestResults": "Подробные результаты выполнения тестов",
+  "testPassedSuccessfully": "✓ Тест пройден успешно",
+  "completedIn": "Завершено за {{duration}}",
+  "testWasSkipped": "⚠ Тест был пропущен",
+  "testExecutionBypassed": "Выполнение теста было пропущено",
+  "errorMessage": "Сообщение об ошибке:",
+  "stackTrace": "Трассировка стека:",
+  "testAssertionFailed": "Ошибка утверждения теста",
+  "testStatusDistribution": "Распределение статусов тестов",
+  "overallTestResults": "Общие результаты выполнения тестов",
+  "testsByCategory": "Тесты по категориям",
+  "distributionAcrossCategories": "Распределение тестов по различным категориям",
+  "executionTimeline": "Временная шкала выполнения",
+  "testResultsOverTime": "Результаты тестов по временным интервалам",
+  "longestRunningTests": "Самые долгие тесты",
+  "highestExecutionDuration": "Тесты с наибольшей продолжительностью выполнения",
+  "tests": "тестов",
+  "estimatedTime": "{{time}}",
+  "priority": {
+    "high": "высокий",
+    "medium": "средний", 
+    "low": "низкий"
+  },
+  "testSuites": {
+    "regression": {
+      "name": "Регрессионные тесты",
+      "description": "Полный набор регрессионных тестов, покрывающий все основные функции"
+    },
+    "smoke": {
+      "name": "Дымовые тесты",
+      "description": "Базовые тесты функциональности для проверки основных возможностей"
+    },
+    "hotfix": {
+      "name": "Тесты хотфикса",
+      "description": "Критически важные тесты для экстренных развертываний"
+    },
+    "integration": {
+      "name": "Интеграционные тесты", 
+      "description": "Тесты валидации интеграции API и сервисов"
+    },
+    "ui": {
+      "name": "UI тесты",
+      "description": "Тесты пользовательского интерфейса и визуальной регрессии"
+    },
+    "performance": {
+      "name": "Тесты производительности",
+      "description": "Нагрузочное тестирование и бенчмарки производительности"
+    }
+  }
+}

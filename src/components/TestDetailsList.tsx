@@ -1,5 +1,5 @@
-
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -28,6 +28,7 @@ const TestDetailsList = ({ tests }: TestDetailsListProps) => {
   const [statusFilter, setStatusFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [expandedTest, setExpandedTest] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -63,15 +64,15 @@ const TestDetailsList = ({ tests }: TestDetailsListProps) => {
       {/* Filters */}
       <Card>
         <CardHeader>
-          <CardTitle>Filter Tests</CardTitle>
-          <CardDescription>Search and filter test results</CardDescription>
+          <CardTitle>{t('filterTests')}</CardTitle>
+          <CardDescription>{t('searchFilterTests')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <Input
-                placeholder="Search tests..."
+                placeholder={t('searchTests')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-9"
@@ -80,22 +81,22 @@ const TestDetailsList = ({ tests }: TestDetailsListProps) => {
             
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Filter by status" />
+                <SelectValue placeholder={t('filterByStatus')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
-                <SelectItem value="passed">Passed</SelectItem>
-                <SelectItem value="failed">Failed</SelectItem>
-                <SelectItem value="skipped">Skipped</SelectItem>
+                <SelectItem value="all">{t('allStatuses')}</SelectItem>
+                <SelectItem value="passed">{t('passed')}</SelectItem>
+                <SelectItem value="failed">{t('failed')}</SelectItem>
+                <SelectItem value="skipped">{t('skipped')}</SelectItem>
               </SelectContent>
             </Select>
             
             <Select value={categoryFilter} onValueChange={setCategoryFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Filter by category" />
+                <SelectValue placeholder={t('filterByCategory')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
+                <SelectItem value="all">{t('allCategories')}</SelectItem>
                 {categories.map(category => (
                   <SelectItem key={category} value={category}>
                     {category}
@@ -110,8 +111,8 @@ const TestDetailsList = ({ tests }: TestDetailsListProps) => {
       {/* Test Results */}
       <Card>
         <CardHeader>
-          <CardTitle>Test Results ({filteredTests.length})</CardTitle>
-          <CardDescription>Detailed test execution results</CardDescription>
+          <CardTitle>{t('testResults_count', { count: filteredTests.length })}</CardTitle>
+          <CardDescription>{t('detailedTestResults')}</CardDescription>
         </CardHeader>
         <CardContent>
           <ScrollArea className="h-[600px]">
@@ -138,7 +139,7 @@ const TestDetailsList = ({ tests }: TestDetailsListProps) => {
                       </div>
                       <div className="flex items-center gap-2">
                         <Badge className={getStatusColor(test.status)} variant="outline">
-                          {test.status}
+                          {t(test.status)}
                         </Badge>
                         <div className="flex items-center gap-1 text-sm text-gray-600">
                           <Clock className="w-3 h-3" />
@@ -153,15 +154,15 @@ const TestDetailsList = ({ tests }: TestDetailsListProps) => {
                       {test.status === "failed" && (
                         <div className="space-y-3">
                           <div>
-                            <h4 className="font-medium text-red-700 mb-2">Error Message:</h4>
+                            <h4 className="font-medium text-red-700 mb-2">{t('errorMessage')}</h4>
                             <p className="text-sm text-red-600 bg-red-50 p-3 rounded border">
-                              {test.error || "Test assertion failed"}
+                              {test.error || t('testAssertionFailed')}
                             </p>
                           </div>
                           
                           {test.stackTrace && (
                             <div>
-                              <h4 className="font-medium text-gray-700 mb-2">Stack Trace:</h4>
+                              <h4 className="font-medium text-gray-700 mb-2">{t('stackTrace')}</h4>
                               <pre className="text-xs text-gray-600 bg-gray-100 p-3 rounded border overflow-x-auto">
                                 {test.stackTrace}
                               </pre>
@@ -172,15 +173,15 @@ const TestDetailsList = ({ tests }: TestDetailsListProps) => {
                       
                       {test.status === "passed" && (
                         <div className="text-green-700">
-                          <p className="font-medium">✓ Test passed successfully</p>
-                          <p className="text-sm text-green-600">Completed in {test.duration}</p>
+                          <p className="font-medium">{t('testPassedSuccessfully')}</p>
+                          <p className="text-sm text-green-600">{t('completedIn', { duration: test.duration })}</p>
                         </div>
                       )}
                       
                       {test.status === "skipped" && (
                         <div className="text-yellow-700">
-                          <p className="font-medium">⚠ Test was skipped</p>
-                          <p className="text-sm text-yellow-600">Test execution was bypassed</p>
+                          <p className="font-medium">{t('testWasSkipped')}</p>
+                          <p className="text-sm text-yellow-600">{t('testExecutionBypassed')}</p>
                         </div>
                       )}
                     </div>

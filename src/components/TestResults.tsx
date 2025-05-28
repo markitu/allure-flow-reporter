@@ -1,5 +1,5 @@
-
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,6 +13,7 @@ import { mockTestResults } from "@/lib/mockData";
 const TestResults = () => {
   const [selectedExecution, setSelectedExecution] = useState(mockTestResults[0]);
   const [authorFilter, setAuthorFilter] = useState("all");
+  const { t } = useTranslation();
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -45,16 +46,16 @@ const TestResults = () => {
       {/* Author Filter */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Filter by Author</CardTitle>
-          <CardDescription>View test executions by specific team members</CardDescription>
+          <CardTitle className="text-lg">{t('filterByAuthor')}</CardTitle>
+          <CardDescription>{t('viewTestExecutions')}</CardDescription>
         </CardHeader>
         <CardContent>
           <Select value={authorFilter} onValueChange={setAuthorFilter}>
             <SelectTrigger className="w-64">
-              <SelectValue placeholder="Filter by author" />
+              <SelectValue placeholder={t('filterByAuthor')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Authors</SelectItem>
+              <SelectItem value="all">{t('allAuthors')}</SelectItem>
               {authors.map(author => (
                 <SelectItem key={author} value={author}>
                   {author}
@@ -69,8 +70,8 @@ const TestResults = () => {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <Card className="lg:col-span-1">
           <CardHeader>
-            <CardTitle className="text-lg">Recent Executions</CardTitle>
-            <CardDescription>Test run history ({filteredExecutions.length} results)</CardDescription>
+            <CardTitle className="text-lg">{t('recentExecutions')}</CardTitle>
+            <CardDescription>{t('testRunHistory')} ({t('results_count', { count: filteredExecutions.length })})</CardDescription>
           </CardHeader>
           <CardContent>
             <ScrollArea className="h-[400px]">
@@ -88,7 +89,7 @@ const TestResults = () => {
                     <div className="flex items-center justify-between mb-2">
                       <span className="font-medium text-sm">{execution.suiteName}</span>
                       <Badge className={getStatusColor(execution.status)} variant="outline">
-                        {execution.status}
+                        {t(execution.status)}
                       </Badge>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-gray-600 mb-1">
@@ -118,13 +119,16 @@ const TestResults = () => {
                 <div>
                   <CardTitle className="text-xl">{selectedExecution.suiteName}</CardTitle>
                   <CardDescription>
-                    Executed on {new Date(selectedExecution.timestamp).toLocaleString()} by {selectedExecution.author}
+                    {t('executedOn', { 
+                      date: new Date(selectedExecution.timestamp).toLocaleString(), 
+                      author: selectedExecution.author 
+                    })}
                   </CardDescription>
                 </div>
                 <div className="flex items-center gap-2">
                   {getStatusIcon(selectedExecution.status)}
                   <Badge className={getStatusColor(selectedExecution.status)} variant="outline">
-                    {selectedExecution.status}
+                    {t(selectedExecution.status)}
                   </Badge>
                 </div>
               </div>
@@ -132,9 +136,9 @@ const TestResults = () => {
             <CardContent>
               <Tabs defaultValue="overview" className="w-full">
                 <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="overview">Overview</TabsTrigger>
-                  <TabsTrigger value="charts">Charts & Analytics</TabsTrigger>
-                  <TabsTrigger value="details">Test Details</TabsTrigger>
+                  <TabsTrigger value="overview">{t('overview')}</TabsTrigger>
+                  <TabsTrigger value="charts">{t('chartsAnalytics')}</TabsTrigger>
+                  <TabsTrigger value="details">{t('testDetails')}</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="overview">
@@ -147,7 +151,7 @@ const TestResults = () => {
                             <p className="text-2xl font-bold text-green-600">
                               {selectedExecution.summary.passed}
                             </p>
-                            <p className="text-sm text-gray-600">Passed</p>
+                            <p className="text-sm text-gray-600">{t('passed')}</p>
                           </div>
                         </div>
                       </CardContent>
@@ -161,7 +165,7 @@ const TestResults = () => {
                             <p className="text-2xl font-bold text-red-600">
                               {selectedExecution.summary.failed}
                             </p>
-                            <p className="text-sm text-gray-600">Failed</p>
+                            <p className="text-sm text-gray-600">{t('failed')}</p>
                           </div>
                         </div>
                       </CardContent>
@@ -175,7 +179,7 @@ const TestResults = () => {
                             <p className="text-2xl font-bold text-yellow-600">
                               {selectedExecution.summary.skipped}
                             </p>
-                            <p className="text-sm text-gray-600">Skipped</p>
+                            <p className="text-sm text-gray-600">{t('skipped')}</p>
                           </div>
                         </div>
                       </CardContent>
@@ -189,7 +193,7 @@ const TestResults = () => {
                             <p className="text-2xl font-bold text-blue-600">
                               {selectedExecution.duration}
                             </p>
-                            <p className="text-sm text-gray-600">Duration</p>
+                            <p className="text-sm text-gray-600">{t('duration')}</p>
                           </div>
                         </div>
                       </CardContent>

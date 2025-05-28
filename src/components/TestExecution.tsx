@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -17,67 +18,68 @@ interface TestSuite {
   tags: string[];
 }
 
-const testSuites: TestSuite[] = [
-  {
-    id: "regression",
-    name: "Regression Tests",
-    description: "Complete regression test suite covering all major functionalities",
-    testCount: 245,
-    estimatedDuration: "45 min",
-    priority: "high",
-    tags: ["regression", "full-coverage", "critical"]
-  },
-  {
-    id: "smoke",
-    name: "Smoke Tests",
-    description: "Basic functionality tests to verify core features",
-    testCount: 32,
-    estimatedDuration: "8 min",
-    priority: "high",
-    tags: ["smoke", "quick", "essential"]
-  },
-  {
-    id: "hotfix",
-    name: "Hotfix Tests",
-    description: "Critical path tests for emergency deployments",
-    testCount: 18,
-    estimatedDuration: "5 min",
-    priority: "high",
-    tags: ["hotfix", "critical", "deployment"]
-  },
-  {
-    id: "integration",
-    name: "Integration Tests",
-    description: "API and service integration validation tests",
-    testCount: 67,
-    estimatedDuration: "20 min",
-    priority: "medium",
-    tags: ["integration", "api", "services"]
-  },
-  {
-    id: "ui",
-    name: "UI Tests",
-    description: "User interface and visual regression tests",
-    testCount: 89,
-    estimatedDuration: "15 min",
-    priority: "medium",
-    tags: ["ui", "visual", "frontend"]
-  },
-  {
-    id: "performance",
-    name: "Performance Tests",
-    description: "Load testing and performance benchmarks",
-    testCount: 25,
-    estimatedDuration: "30 min",
-    priority: "low",
-    tags: ["performance", "load", "benchmarks"]
-  }
-];
-
 const TestExecution = () => {
   const [runningTests, setRunningTests] = useState<Set<string>>(new Set());
   const [progress, setProgress] = useState<Record<string, number>>({});
   const { toast } = useToast();
+  const { t } = useTranslation();
+
+  const testSuites: TestSuite[] = [
+    {
+      id: "regression",
+      name: t('testSuites.regression.name'),
+      description: t('testSuites.regression.description'),
+      testCount: 245,
+      estimatedDuration: "45 min",
+      priority: "high",
+      tags: ["regression", "full-coverage", "critical"]
+    },
+    {
+      id: "smoke",
+      name: t('testSuites.smoke.name'),
+      description: t('testSuites.smoke.description'),
+      testCount: 32,
+      estimatedDuration: "8 min",
+      priority: "high",
+      tags: ["smoke", "quick", "essential"]
+    },
+    {
+      id: "hotfix",
+      name: t('testSuites.hotfix.name'),
+      description: t('testSuites.hotfix.description'),
+      testCount: 18,
+      estimatedDuration: "5 min",
+      priority: "high",
+      tags: ["hotfix", "critical", "deployment"]
+    },
+    {
+      id: "integration",
+      name: t('testSuites.integration.name'),
+      description: t('testSuites.integration.description'),
+      testCount: 67,
+      estimatedDuration: "20 min",
+      priority: "medium",
+      tags: ["integration", "api", "services"]
+    },
+    {
+      id: "ui",
+      name: t('testSuites.ui.name'),
+      description: t('testSuites.ui.description'),
+      testCount: 89,
+      estimatedDuration: "15 min",
+      priority: "medium",
+      tags: ["ui", "visual", "frontend"]
+    },
+    {
+      id: "performance",
+      name: t('testSuites.performance.name'),
+      description: t('testSuites.performance.description'),
+      testCount: 25,
+      estimatedDuration: "30 min",
+      priority: "low",
+      tags: ["performance", "load", "benchmarks"]
+    }
+  ];
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -93,8 +95,8 @@ const TestExecution = () => {
     setProgress(prev => ({ ...prev, [suiteId]: 0 }));
 
     toast({
-      title: "Test Execution Started",
-      description: `Running ${testSuites.find(s => s.id === suiteId)?.name}...`,
+      title: t('testExecutionStarted'),
+      description: `${t('running')} ${testSuites.find(s => s.id === suiteId)?.name}...`,
     });
 
     // Simulate test execution with progress
@@ -110,8 +112,8 @@ const TestExecution = () => {
           });
           
           toast({
-            title: "Test Execution Complete",
-            description: `${testSuites.find(s => s.id === suiteId)?.name} finished successfully!`,
+            title: t('testExecutionComplete'),
+            description: `${testSuites.find(s => s.id === suiteId)?.name} ${t('finishedSuccessfully')}`,
           });
           
           return prev;
@@ -133,7 +135,7 @@ const TestExecution = () => {
                   <CardDescription className="mt-2">{suite.description}</CardDescription>
                 </div>
                 <Badge className={getPriorityColor(suite.priority)} variant="outline">
-                  {suite.priority}
+                  {t(`priority.${suite.priority}`)}
                 </Badge>
               </div>
             </CardHeader>
@@ -142,11 +144,11 @@ const TestExecution = () => {
                 <div className="flex items-center justify-between text-sm text-slate-600">
                   <div className="flex items-center gap-1">
                     <CheckCircle className="w-4 h-4" />
-                    {suite.testCount} tests
+                    {suite.testCount} {t('tests')}
                   </div>
                   <div className="flex items-center gap-1">
                     <Clock className="w-4 h-4" />
-                    {suite.estimatedDuration}
+                    {t('estimatedTime', { time: suite.estimatedDuration })}
                   </div>
                 </div>
                 
@@ -162,7 +164,7 @@ const TestExecution = () => {
                   <div className="space-y-2">
                     <Progress value={progress[suite.id] || 0} className="w-full" />
                     <p className="text-sm text-slate-600">
-                      Running... {Math.round(progress[suite.id] || 0)}%
+                      {t('running')} {Math.round(progress[suite.id] || 0)}%
                     </p>
                   </div>
                 )}
@@ -173,7 +175,7 @@ const TestExecution = () => {
                   className="w-full"
                 >
                   <Play className="w-4 h-4 mr-2" />
-                  {runningTests.has(suite.id) ? "Running..." : "Run Tests"}
+                  {runningTests.has(suite.id) ? t('running') : t('runTests')}
                 </Button>
               </div>
             </CardContent>

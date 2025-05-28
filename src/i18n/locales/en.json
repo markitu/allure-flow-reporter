@@ -1,0 +1,83 @@
+
+{
+  "title": "AutoTest Dashboard",
+  "subtitle": "Comprehensive test execution and reporting platform",
+  "testExecution": "Test Execution",
+  "results": "Results",
+  "runTests": "Run Tests",
+  "running": "Running...",
+  "testExecutionStarted": "Test Execution Started",
+  "testExecutionComplete": "Test Execution Complete",
+  "finishedSuccessfully": "finished successfully!",
+  "filterByAuthor": "Filter by Author",
+  "viewTestExecutions": "View test executions by specific team members",
+  "allAuthors": "All Authors",
+  "recentExecutions": "Recent Executions",
+  "testRunHistory": "Test run history",
+  "results_count": "{{count}} results",
+  "executedOn": "Executed on {{date}} by {{author}}",
+  "passed": "Passed",
+  "failed": "Failed",
+  "skipped": "Skipped",
+  "duration": "Duration",
+  "overview": "Overview",
+  "chartsAnalytics": "Charts & Analytics",
+  "testDetails": "Test Details",
+  "filterTests": "Filter Tests",
+  "searchFilterTests": "Search and filter test results",
+  "searchTests": "Search tests...",
+  "filterByStatus": "Filter by status",
+  "allStatuses": "All Statuses",
+  "filterByCategory": "Filter by category",
+  "allCategories": "All Categories",
+  "testResults_count": "Test Results ({{count}})",
+  "detailedTestResults": "Detailed test execution results",
+  "testPassedSuccessfully": "✓ Test passed successfully",
+  "completedIn": "Completed in {{duration}}",
+  "testWasSkipped": "⚠ Test was skipped",
+  "testExecutionBypassed": "Test execution was bypassed",
+  "errorMessage": "Error Message:",
+  "stackTrace": "Stack Trace:",
+  "testAssertionFailed": "Test assertion failed",
+  "testStatusDistribution": "Test Status Distribution",
+  "overallTestResults": "Overall test execution results",
+  "testsByCategory": "Tests by Category",
+  "distributionAcrossCategories": "Distribution of tests across different categories",
+  "executionTimeline": "Execution Timeline",
+  "testResultsOverTime": "Test results over time intervals",
+  "longestRunningTests": "Longest Running Tests",
+  "highestExecutionDuration": "Tests with highest execution duration",
+  "tests": "tests",
+  "estimatedTime": "{{time}}",
+  "priority": {
+    "high": "high",
+    "medium": "medium",
+    "low": "low"
+  },
+  "testSuites": {
+    "regression": {
+      "name": "Regression Tests",
+      "description": "Complete regression test suite covering all major functionalities"
+    },
+    "smoke": {
+      "name": "Smoke Tests", 
+      "description": "Basic functionality tests to verify core features"
+    },
+    "hotfix": {
+      "name": "Hotfix Tests",
+      "description": "Critical path tests for emergency deployments"
+    },
+    "integration": {
+      "name": "Integration Tests",
+      "description": "API and service integration validation tests"
+    },
+    "ui": {
+      "name": "UI Tests",
+      "description": "User interface and visual regression tests"
+    },
+    "performance": {
+      "name": "Performance Tests",
+      "description": "Load testing and performance benchmarks"
+    }
+  }
+}

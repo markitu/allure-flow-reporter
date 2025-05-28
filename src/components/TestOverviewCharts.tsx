@@ -1,16 +1,18 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, PieChart, Pie, Cell, LineChart, Line, ResponsiveContainer } from "recharts";
+import { useTranslation } from "react-i18next";
 
 interface TestOverviewChartsProps {
   testResults: any;
 }
 
 const TestOverviewCharts = ({ testResults }: TestOverviewChartsProps) => {
+  const { t } = useTranslation();
+  
   const statusData = [
-    { name: "Passed", value: testResults.summary.passed, color: "#22c55e" },
-    { name: "Failed", value: testResults.summary.failed, color: "#ef4444" },
-    { name: "Skipped", value: testResults.summary.skipped, color: "#eab308" },
+    { name: t('passed'), value: testResults.summary.passed, color: "#22c55e" },
+    { name: t('failed'), value: testResults.summary.failed, color: "#ef4444" },
+    { name: t('skipped'), value: testResults.summary.skipped, color: "#eab308" },
   ];
 
   const categoryData = testResults.tests.reduce((acc: any, test: any) => {
@@ -42,8 +44,8 @@ const TestOverviewCharts = ({ testResults }: TestOverviewChartsProps) => {
       {/* Status Distribution Pie Chart */}
       <Card>
         <CardHeader>
-          <CardTitle>Test Status Distribution</CardTitle>
-          <CardDescription>Overall test execution results</CardDescription>
+          <CardTitle>{t('testStatusDistribution')}</CardTitle>
+          <CardDescription>{t('overallTestResults')}</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
@@ -71,8 +73,8 @@ const TestOverviewCharts = ({ testResults }: TestOverviewChartsProps) => {
       {/* Category Distribution Bar Chart */}
       <Card>
         <CardHeader>
-          <CardTitle>Tests by Category</CardTitle>
-          <CardDescription>Distribution of tests across different categories</CardDescription>
+          <CardTitle>{t('testsByCategory')}</CardTitle>
+          <CardDescription>{t('distributionAcrossCategories')}</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
@@ -90,8 +92,8 @@ const TestOverviewCharts = ({ testResults }: TestOverviewChartsProps) => {
       {/* Execution Timeline */}
       <Card>
         <CardHeader>
-          <CardTitle>Execution Timeline</CardTitle>
-          <CardDescription>Test results over time intervals</CardDescription>
+          <CardTitle>{t('executionTimeline')}</CardTitle>
+          <CardDescription>{t('testResultsOverTime')}</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
@@ -110,8 +112,8 @@ const TestOverviewCharts = ({ testResults }: TestOverviewChartsProps) => {
       {/* Longest Running Tests */}
       <Card>
         <CardHeader>
-          <CardTitle>Longest Running Tests</CardTitle>
-          <CardDescription>Tests with highest execution duration</CardDescription>
+          <CardTitle>{t('longestRunningTests')}</CardTitle>
+          <CardDescription>{t('highestExecutionDuration')}</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
